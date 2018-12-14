@@ -6,7 +6,6 @@
 <div class="section__content section__content--p30">
     <div class="container-fluid">
         <div class="row">
-
           <div class="col-md-12">
               <!-- DATA TABLE-->
               <div class="table-responsive m-b-40">
@@ -34,18 +33,22 @@
                               <td class="process">Processed</td>
                               <td>
                                 <div class="table-data-feature">
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Envoyer">
+                                    <!-- <button class="item" data-toggle="tooltip" data-placement="top" title="Envoyer">
                                         <i class="zmdi zmdi-mail-send"></i>
-                                    </button>
+                                    </button> -->
+                                    <!-- EDIT -->
                                     <a href="{{ path('edit') }}?class={{class}}&id={{element.id}}" class="item" data-toggle="tooltip" data-placement="top" title="Éditer">
                                         <i class="zmdi zmdi-edit"></i>
                                     </a>
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Supprimer">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button>
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Plus..">
+                                    <!-- DELETE -->
+                                    <span data-toggle="modal" data-target="#staticModal" class="openModalDelete" id="{{element.id}}">
+                                      <button class="item" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                                          <i class="zmdi zmdi-delete"></i>
+                                      </button>
+                                    </span>
+                                    <!-- <button class="item" data-toggle="tooltip" data-placement="top" title="Plus..">
                                         <i class="zmdi zmdi-more"></i>
-                                    </button>
+                                    </button> -->
                                 </div>
                               </td>
                           </tr>
@@ -59,4 +62,46 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block modals %}
+
+{% set currentPath = app.request.uri %}
+
+<!-- modal static -->
+<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
+ data-backdrop="static">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticModalLabel">Supprimer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Êtes-vous sûr de vouloir supprimer cet élément?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form class="formDelete" action="{{currentPath}}" method="post">
+          <input type="hidden" class="regionId" name="id" value="">
+          <button type="submit" class="btn btn-danger">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal static -->
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+  $('.openModalDelete').click(function(){
+    var id = $(this).attr('id');
+    $('.formDelete .regionId').val(id);
+  });
+</script>
 {% endblock %}

@@ -28,13 +28,24 @@ class AdminController extends AbstractController
     /**
      * @Route("/list", name="list")
      */
-    public function list(Request $request)
+    public function list(Request $request, ObjectManager $manager)
     {
         $class = $request->query->get('class');
         $pathClass = "App\Entity\\".$class;
 
-        //Get elements
+        // Get Repository
         $repository = $this->getDoctrine()->getRepository("App\Entity\\".$class);
+
+        // If Delete Click
+        if($request->request->get('id')){
+          $idToRemove = $request->request->get('id');
+          $elementToRemove = $repository->find($idToRemove);
+          $manager->remove($elementToRemove);
+          $manager->flush();
+          $this->addFlash('success', 'L\'objet a été supprimé avec succès');
+        }
+
+        //Get elements
         $elements = $repository->findAll();
 
         // CONVERT OBJECT TO ARRAY for List
@@ -45,7 +56,6 @@ class AdminController extends AbstractController
         $i = 0;
         foreach ($newElements as $newElement) {
           foreach ($newElement as $key => $value) {
-            dump($key);
             $newkey = str_replace("\x00", '', $key);
             $newkey = str_replace("App\Entity\\".$class, '', $newkey);
             $newElementsFilter[$i][$newkey] = $value;
@@ -56,8 +66,6 @@ class AdminController extends AbstractController
         // GET all attributes
         $elementTest = new $pathClass();
         $attributesClass = $elementTest->getAllAttributes();
-
-
 
         return $this->render('admin/list.html.twig', [
             'controller_name' => "Liste d'".$class,

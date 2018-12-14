@@ -325,6 +325,10 @@
             </div>
             <!-- END MAIN CONTENT -->
 
+            <!-- MODAL CONTENT -->
+            {% block modals %}{% endblock %}
+            <!-- END MODAL CONTENT -->
+
           </div>
       </div>
 
@@ -361,7 +365,7 @@
               type: 'POST',
               url: "{{ path('ajaxMenu') }}",
               success: function (data) {
-                
+
                   $.each(data, function(i, v) {
                       // URL go to list
                       var url = '{{ path("list") }}';
