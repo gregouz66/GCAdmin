@@ -51,22 +51,9 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled menuNavClass">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="index.html">Dashboard 1</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Dashboard 4</a>
-                                </li>
-                            </ul>
+                          <a href="{{path('admin')}}">
+                            <i class="fas fa-tachometer-alt"></i>Tableau de bord
+                          </a>
                         </li>
                     </ul>
                 </div>
@@ -85,24 +72,14 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list menuNavClass">
                         <li class="{% if activePage is defined %} {{activePage}} {% endif %} has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="index.html">Dashboard 1</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Dashboard 4</a>
-                                </li>
-                            </ul>
+                            <a href="{{path('admin')}}">
+                              <i class="fas fa-tachometer-alt"></i>Tableau de bord
+                            </a>
                         </li>
                     </ul>
+                    <div class="container-loader">
+                        <div class="loader"></div>
+                    </div>
                 </nav>
             </div>
         </aside>
@@ -115,14 +92,16 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
+                            <!-- RECHERCHER -->
+                            <!-- <form class="form-header" action="" method="POST">
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
                                 </button>
-                            </form>
-                            <div class="header-button">
-                                <div class="noti-wrap">
+                            </form> -->
+                            <div class="header-button ml-auto">
+                                <!-- NOTIFS -->
+                                <!-- <div class="noti-wrap">
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-comment-more"></i>
                                         <span class="quantity">1</span>
@@ -233,7 +212,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
@@ -358,32 +337,35 @@
 
       <!-- AJAX JS -->
       <script type="text/javascript">
-      $(document).ready(function(){
-          //AJAX for menu
-          $.ajax({
-              async: true,
-              type: 'POST',
-              url: "{{ path('ajaxMenu') }}",
-              success: function (data) {
+        $(document).ready(function(){
+            //AJAX for menu
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: "{{ path('ajaxMenu') }}",
+                success: function (data) {
 
-                  $.each(data, function(i, v) {
-                      // URL go to list
-                      var url = '{{ path("list") }}';
-                      // Defined who is active
-                      {% if class is defined %}
-                      if(v.entity == "{{class}}"){
-                        v.active = 'active';
-                      } else {
-                        v.active = '';
-                      }
-                      {% endif %}
-                      // Render
-                      resultHTML = '<li class="'+v.active+' has-sub"> <a href="'+url+'?class='+v.entity+'"> <i class="'+v.icon+'"></i>'+v.label+'</a> </li>';
-                      $('.menuNavClass').append(resultHTML);
-                  })
-              },
-          });
-      });
+                    $.each(data, function(i, v) {
+                        // URL go to list
+                        var url = '{{ path("list") }}';
+                        // Defined who is active
+                        {% if class is defined %}
+                        if(v.entity == "{{class}}"){
+                          v.active = 'active';
+                        } else {
+                          v.active = '';
+                        }
+                        {% endif %}
+                        // Render
+                        resultHTML = '<li class="'+v.active+' has-sub"> <a href="'+url+'?class='+v.entity+'"> <i class="'+v.icon+'"></i>'+v.label+'</a> </li>';
+                        $('.menuNavClass').append(resultHTML);
+                    })
+
+                    // End Loader
+                    $('.container-loader').addClass('d-none');
+                },
+            });
+        });
       </script>
 
       <!-- Perso JS -->
