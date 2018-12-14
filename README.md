@@ -11,7 +11,8 @@ parameters:
 ## Important
 
 it is necessary that each of your entities have this function :
-```
+```php
+<?php
 public function getAllAttributes() {
     return get_object_vars($this);
 }
