@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="section__content section__content--p30">
+    <div class="container-fluid">
+
+      {{form(form)}}
+
+    </div>
+</div>
+{% endblock %}

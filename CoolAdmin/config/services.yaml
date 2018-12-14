@@ -6,6 +6,11 @@
 parameters:
     locale: 'en'
 
+    GCAdmin:
+        menu:
+            - { entity: 'Article', label: 'Articles', icon: 'fas fa-chart-bar' }
+            - { entity: 'User', label: 'Utilisateurs', icon: 'fas fa-chart-bar' }
+
 services:
     # default configuration for services in *this* file
     _defaults:

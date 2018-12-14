@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+
+{% block body %}
+<div class="section__content section__content--p30">
+    <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-md-12">
+              <!-- DATA TABLE-->
+              <div class="table-responsive m-b-40">
+                  <table class="table table-borderless table-data3">
+                      <thead>
+                          <tr>
+                              {% for key,element in attributs %}
+                              <th>{{key}}</th>
+                              {% endfor %}
+
+                              <th>status</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for element in elements %}
+                          <tr>
+                              {% for key,singleElement in element %}
+                              <td>
+                                {{ singleElement|length > 20 ? singleElement|slice(0, 20) ~ '...' : singleElement }}
+                              </td>
+                              {% endfor %}
+
+                              <!-- PROCESS OR DENIED -->
+                              <td class="process">Processed</td>
+                              <td>
+                                <div class="table-data-feature">
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Envoyer">
+                                        <i class="zmdi zmdi-mail-send"></i>
+                                    </button>
+                                    <a href="{{ path('edit') }}?class={{class}}&id={{element.id}}" class="item" data-toggle="tooltip" data-placement="top" title="Éditer">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </a>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Plus..">
+                                        <i class="zmdi zmdi-more"></i>
+                                    </button>
+                                </div>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+              <!-- END DATA TABLE-->
+          </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

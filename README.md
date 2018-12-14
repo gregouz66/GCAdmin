@@ -8,4 +8,13 @@ parameters:
     GCAdmin: [...]
 ```
 
+## Important
+
+it is necessary that each of your entities have this function :
+```
+public function getAllAttributes() {
+    return get_object_vars($this);
+}
+```
+
 Copyright ©2018 all rights reserved.
