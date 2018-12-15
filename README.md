@@ -10,7 +10,7 @@ parameters:
 
 ## Important
 
-it is necessary that each of your entities have this function :
+1. it is necessary that each of your entities have this function :
 ```php
 <?php
 public function getAllAttributes() {
@@ -18,6 +18,6 @@ public function getAllAttributes() {
 }
 ```
 
-The *vendor\symfony\twig-bridge\Resources\views\Form\form_table_layout.html.twig* file is important to import to the project because it allows displaying to display an entity attribute if it is in the "table" format.
+2. The *vendor\symfony\twig-bridge\Resources\views\Form\form_table_layout.html.twig* file is important to import to the project because it allows displaying to display an entity attribute if it is in the "array" format.
 
 Copyright ©2018 all rights reserved.
