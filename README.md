@@ -5,7 +5,10 @@ GCAdmin is a project created by Gregory Cascales to reuse several types of admin
 The configuration will be mainly in the config/services.yaml file :
 ```
 parameters:
-    GCAdmin: [...]
+    GCAdmin:
+        menu:
+        - { entity: 'Article', label: 'Articles', icon: 'fa fa-newspaper-o' }
+        - { entity: 'User', label: 'Utilisateurs', icon: 'fas fa-chart-bar' }
 ```
 
 ## Important
