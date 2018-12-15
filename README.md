@@ -18,6 +18,6 @@ public function getAllAttributes() {
 }
 ```
 
-The vendor *\symfony\twig-bridge\Resources\views\Form\form_table_layout.html.twig* file is important to import to the project because it allows displaying to display an entity attribute if it is in the "table" format.
+The *vendor\symfony\twig-bridge\Resources\views\Form\form_table_layout.html.twig* file is important to import to the project because it allows displaying to display an entity attribute if it is in the "table" format.
 
 Copyright ©2018 all rights reserved.
