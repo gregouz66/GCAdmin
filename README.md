@@ -22,4 +22,4 @@ public function getAllAttributes() {
 
 
 
-~~Copyright ©2018 all rights reserved.~~
+**Copyright ©2018 all rights reserved.**
