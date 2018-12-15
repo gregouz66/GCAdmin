@@ -7,8 +7,8 @@ The configuration will be mainly in the config/services.yaml file :
 parameters:
     GCAdmin:
         menu:
-        - { entity: 'Article', label: 'Articles', icon: 'fa fa-newspaper-o' }
-        - { entity: 'User', label: 'Utilisateurs', icon: 'fas fa-chart-bar' }
+            - { entity: 'Article', label: 'Articles', icon: 'fa fa-newspaper-o' }
+            - { entity: 'User', label: 'Utilisateurs', icon: 'fas fa-chart-bar' }
 ```
 
 ## Important
