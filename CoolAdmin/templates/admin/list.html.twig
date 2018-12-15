@@ -7,6 +7,14 @@
     <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
+              <div class="overview-wrap">
+                  <h2 class="title-1">{{controller_name}}</h2>
+                  <a href="{{ path('add') }}?class={{class}}" class="au-btn au-btn-icon au-btn--blue btn-sm">
+                      <i class="zmdi zmdi-plus"></i>Ajouter un élément
+                  </a>
+              </div>
+          </div>
+          <div class="col-md-12 m-t-25">
               <!-- DATA TABLE-->
               <div class="table-responsive m-b-40">
                   <table class="table table-borderless table-data3">
@@ -25,7 +33,11 @@
                           <tr>
                               {% for key,singleElement in element %}
                               <td>
+                                {% if singleElement is iterable %}
+                                {{ singleElement|join(', ') }}
+                                {% else %}
                                 {{ singleElement|length > 20 ? singleElement|slice(0, 20) ~ '...' : singleElement }}
+                                {% endif %}
                               </td>
                               {% endfor %}
 
