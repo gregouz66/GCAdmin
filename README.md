@@ -23,6 +23,20 @@ public function getAllAttributes() {
 
 2. The *vendor\symfony\twig-bridge\Resources\views\Form\form_table_layout.html.twig* file is important to import to the project because it allows displaying to display an entity attribute if it is in the "array" format.
 
+##optional configurations
+```
+parameters:
+    GCAdmin:
+        dashboard:
+            cube-statistics:
+                - { type: '1', color: '1', entity: 'Article', label: 'Articles postés', attr-duration-sql: 'created_at', attr-value: '', fewer-days: 5, icon: 'zmdi zmdi-account-o' }
+```
+
+| Syntax  | description |   value    |
+|---------|-------------|------------|
+| type  | chart type    | 1, 2, 3, 4 |
+| color | container's background color| 1, 2, 3, 4 |
+
 
 
 **Copyright ©2018 all rights reserved.**
