@@ -15,21 +15,53 @@ use Doctrine\Common\Annotations\AnnotationReader;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/", name="admin")
+     * @Route("/admin", name="admin")
      */
-    public function index()
+    public function index(ObjectManager $manager)
     {
-        // Menu Settings
-        $classMenu = $this->getParameter('GCAdmin')['menu'];
+        // Statistics Settings
+          $paramGeneral = $this->getParameter('GCAdmin');
+
+          if(isset($paramGeneral['dashboard']['cube-statistics'])){
+            $paramStatistics = $paramGeneral['dashboard']['cube-statistics'];
+
+            $i = 0;
+            foreach ($paramStatistics as $oneStat) {
+                //FIND ALL
+                $repository = $this->getDoctrine()->getRepository("App\Entity\\".$oneStat['entity']);
+                $products = $repository->findAll();
+                $paramStatistics[$i]['totalCount'] = count($products);
+                //GET DAYS MAX
+                $dateMax = date('d', strtotime('-'.$oneStat['fewer-days'].' days'));
+                // SQL
+                $conn = $manager->getConnection();
+                $sql = "
+                SELECT COUNT(1) AS entries, DATE(".$oneStat['attr-duration-sql'].") as date
+                FROM ".$oneStat['entity']."
+                WHERE ".$oneStat['attr-duration-sql']." >= DATE_FORMAT(CURDATE(),'%Y-%m-".$dateMax."')
+                GROUP BY DATE(".$oneStat['attr-duration-sql'].")
+                ";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $resultStats[] = $stmt->fetchAll();
+
+                $i++;
+            }
+          } else {
+            $paramStatistics = null;
+            $resultStats = null;
+          }
 
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
             'activePage' => 'active',
+            'paramStatistics' => $paramStatistics,
+            'resultStats' => $resultStats,
         ]);
     }
 
     /**
-     * @Route("/list", name="list")
+     * @Route("/admin/list", name="list")
      */
     public function list(Request $request, ObjectManager $manager)
     {
@@ -83,7 +115,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/edit", name="edit")
+     * @Route("/admin/edit", name="edit")
      */
     public function edit(Request $request, ObjectManager $manager)
     {
@@ -142,7 +174,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add")
+     * @Route("/admin/add", name="add")
      */
     public function add(Request $request, ObjectManager $manager)
     {

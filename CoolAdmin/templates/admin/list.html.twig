@@ -24,7 +24,7 @@
                               <th>{{key}}</th>
                               {% endfor %}
 
-                              <th>status</th>
+                              <!-- <th>status</th> -->
                               <th>Actions</th>
                           </tr>
                       </thead>
@@ -34,15 +34,17 @@
                               {% for key,singleElement in element %}
                               <td>
                                 {% if singleElement is iterable %}
-                                {{ singleElement|join(', ') }}
+                                  {{ singleElement|join(', ') }}
+                                {% elseif singleElement.timestamp is defined %}
+                                  {{ singleElement|date('d/m/Y') }}
                                 {% else %}
-                                {{ singleElement|length > 20 ? singleElement|slice(0, 20) ~ '...' : singleElement }}
+                                  {{ singleElement|length > 20 ? singleElement|slice(0, 20) ~ '...' : singleElement }}
                                 {% endif %}
                               </td>
                               {% endfor %}
 
                               <!-- PROCESS OR DENIED -->
-                              <td class="process">Processed</td>
+                              <!-- <td class="process">Processed</td> -->
                               <td>
                                 <div class="table-data-feature">
                                     <!-- <button class="item" data-toggle="tooltip" data-placement="top" title="Envoyer">

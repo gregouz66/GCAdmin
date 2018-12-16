@@ -7,6 +7,10 @@ parameters:
     locale: 'en'
 
     GCAdmin:
+        dashboard:
+            cube-statistics:
+                - { type: '1', color: '1', entity: 'Article', label: 'Articles postés', attr-duration-sql: 'created_at', attr-value: '', fewer-days: 5, icon: 'zmdi zmdi-account-o' }
+                - { type: '2', color: '2', entity: 'User', label: 'Users inscrits', attr-duration-sql: 'created_at', attr-value: '', fewer-days: 5, icon: 'zmdi zmdi-shopping-cart' }
         menu:
             - { entity: 'Article', label: 'Articles', icon: 'fa fa-newspaper-o' }
             - { entity: 'User', label: 'Utilisateurs', icon: 'fas fa-chart-bar' }

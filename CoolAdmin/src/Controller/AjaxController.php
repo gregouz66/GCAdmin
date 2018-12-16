@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AjaxController extends AbstractController
 {
     /**
-     * @Route("/ajax/menu", name="ajaxMenu")
+     * @Route("/admin/ajax/menu", name="ajaxMenu")
      */
     public function index(Request $request)
     {
