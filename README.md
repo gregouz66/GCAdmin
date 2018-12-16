@@ -29,13 +29,18 @@ parameters:
     GCAdmin:
         dashboard:
             cube-statistics:
-                - { type: '1', color: '1', entity: 'Article', label: 'Articles postés', attr-duration-sql: 'created_at', attr-value: '', fewer-days: 5, icon: 'zmdi zmdi-account-o' }
+                - { type: '1', color: '1', entity: 'Article', label: 'Articles postés', attr-duration-sql: 'created_at', fewer-days: 5, icon: 'zmdi zmdi-account-o' }
 ```
 
-| Syntax  | description |   value    |
+| Syntax  | Description |   Value    |
 |---------|-------------|------------|
 | type  | chart type    | 1, 2, 3, 4 |
 | color | container's background color| 1, 2, 3, 4 |
+| entity | entity used by the statistics | [string] |
+| label | label used for the total result | [string] |
+| attr-duration-sql | attribute used for the time value of the statistic (name of your field in your database and not that of your entity) | [string] |
+| fewer-days | limit of days difference between the first and last statistics | [integer] |
+| icon | class name for the icon used | [string] |
 
 
 
