@@ -11,6 +11,12 @@ parameters:
             - { entity: 'User', label: 'Utilisateurs', icon: 'fas fa-chart-bar' }
 ```
 
+| Syntax  | Description |   Value    |
+|---------|-------------|------------|
+| entity | entity used by the administration | [string] |
+| label | label used for the display in the menu | [string] |
+| icon | class name for the icon used | [string] |
+
 ## Important
 
 1. it is necessary that each of your entities have this function :
@@ -23,7 +29,7 @@ public function getAllAttributes() {
 
 2. The *vendor\symfony\twig-bridge\Resources\views\Form\form_table_layout.html.twig* file is important to import to the project because it allows displaying to display an entity attribute if it is in the "array" format.
 
-## optional configurations
+## Optional configurations
 
 ```
 parameters:
