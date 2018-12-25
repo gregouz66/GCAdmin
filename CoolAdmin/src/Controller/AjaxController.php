@@ -21,7 +21,7 @@ class AjaxController extends AbstractController
             return new JsonResponse($classMenu);
         }
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('GCAdmin/index.html.twig', [
             'controller_name' => 'AdminController',
         ]);
     }

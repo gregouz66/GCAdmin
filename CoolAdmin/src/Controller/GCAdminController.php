@@ -63,7 +63,7 @@ class GCAdminController extends AbstractController
                     GROUP BY DATE(".$oneStat['attr-duration-sql'].")
                     ";
                 }
-                
+
                 if(isset($oneStat['limit'])){
                   $sql .= " LIMIT ".$oneStat['limit'];
                 } else {
@@ -91,7 +91,7 @@ class GCAdminController extends AbstractController
             $resultStats = null;
           }
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('GCAdmin/index.html.twig', [
             'controller_name' => 'AdminController',
             'activePage' => 'active',
             'paramStatistics' => $paramStatistics,
@@ -145,7 +145,7 @@ class GCAdminController extends AbstractController
         $elementTest = new $pathClass();
         $attributesClass = $elementTest->getAllAttributes();
 
-        return $this->render('admin/list.html.twig', [
+        return $this->render('GCAdmin/list.html.twig', [
             'controller_name' => "Liste d'".$class,
             'class' => $class,
             'elements' => $newElementsFilter,
@@ -205,7 +205,7 @@ class GCAdminController extends AbstractController
 
 
 
-        return $this->render('admin/edit.html.twig', [
+        return $this->render('GCAdmin/edit.html.twig', [
             'controller_name' => "Editer un ".$class,
             'class' => $class,
             'form' => $form->createView(),
@@ -263,7 +263,7 @@ class GCAdminController extends AbstractController
 
 
 
-        return $this->render('admin/edit.html.twig', [
+        return $this->render('GCAdmin/edit.html.twig', [
             'controller_name' => "Ajouter un ".$class,
             'class' => $class,
             'form' => $form->createView(),
