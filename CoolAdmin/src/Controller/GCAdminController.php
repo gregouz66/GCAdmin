@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 // READ ENTITY
 use Doctrine\Common\Annotations\AnnotationReader;
 
-class AdminController extends AbstractController
+class GCAdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin")
@@ -31,19 +31,58 @@ class AdminController extends AbstractController
                 $repository = $this->getDoctrine()->getRepository("App\Entity\\".$oneStat['entity']);
                 $products = $repository->findAll();
                 $paramStatistics[$i]['totalCount'] = count($products);
-                //GET DAYS MAX
-                $dateMax = date('d', strtotime('-'.$oneStat['fewer-days'].' days'));
                 // SQL
                 $conn = $manager->getConnection();
-                $sql = "
-                SELECT COUNT(1) AS entries, DATE(".$oneStat['attr-duration-sql'].") as date
-                FROM ".$oneStat['entity']."
-                WHERE ".$oneStat['attr-duration-sql']." >= DATE_FORMAT(CURDATE(),'%Y-%m-".$dateMax."')
-                GROUP BY DATE(".$oneStat['attr-duration-sql'].")
-                ";
+                if(isset($oneStat['delayBy'])){
+                    if($oneStat['delayBy'] == "month"){
+                        $sql = "
+                        SELECT COUNT(1) AS entries, MONTH(".$oneStat['attr-duration-sql'].") as date
+                        FROM ".$oneStat['entity-sql']."
+                        GROUP BY MONTH(".$oneStat['attr-duration-sql'].")
+                        ";
+                    } else {
+                        //DAYS
+                        $sql = "
+                        SELECT COUNT(1) AS entries, DATE(".$oneStat['attr-duration-sql'].") as date
+                        FROM ".$oneStat['entity-sql']."
+                        GROUP BY DATE(".$oneStat['attr-duration-sql'].")
+                        ";
+                        // OLD
+                        // $sql = "
+                        // SELECT COUNT(1) AS entries, DATE(".$oneStat['attr-duration-sql'].") as date
+                        // FROM ".$oneStat['entity-sql']."
+                        // WHERE ".$oneStat['attr-duration-sql']." >= DATE_FORMAT(CURDATE(),'%Y-%m-".$dateMax."')
+                        // GROUP BY DATE(".$oneStat['attr-duration-sql'].")
+                        // ";
+                    }
+                } else {
+                    //DAYS
+                    $sql = "
+                    SELECT COUNT(1) AS entries, DATE(".$oneStat['attr-duration-sql'].") as date
+                    FROM ".$oneStat['entity-sql']."
+                    GROUP BY DATE(".$oneStat['attr-duration-sql'].")
+                    ";
+                }
+                
+                if(isset($oneStat['limit'])){
+                  $sql .= " LIMIT ".$oneStat['limit'];
+                } else {
+                  $sql .= " LIMIT 10"; //DEFAUT
+                }
+
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
                 $resultStats[] = $stmt->fetchAll();
+
+                // IF FORMAT DATE FR OR OTHER
+                if(isset($oneStat['formatDate'])){
+                    $r = 0;
+                    foreach ($resultStats[$i] as $onechamp) {
+                        $newDate = date($oneStat['formatDate'], strtotime($onechamp['date']));
+                        $resultStats[$i][$r]['date'] = $newDate;
+                        $r++;
+                    }
+                }
 
                 $i++;
             }
